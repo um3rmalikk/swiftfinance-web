@@ -10,15 +10,34 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
+        /* Custom background gradient for the stats section to mimic the unique bar effect */
+        .unique-stats-bar {
+            background: linear-gradient(90deg, #1e3a8a 0%, #172554 100%); /* Deep blue gradient */
+            position: relative;
+            z-index: 10;
+        }
+        /* Custom background for the hero section, using a large shape or subtle gradient */
+        .hero-bg {
+            background-color: #f9fafb;
+            position: relative;
+            /* Optional: Add a subtle diagonal split effect using pseudo-elements or mask if needed */
+        }
+        /* Hover effect for feature cards */
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px -5px rgba(37, 99, 235, 0.15); /* Blue-tinted shadow */
+            border-color: #3b82f6;
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen">
 
     <div id="navbar-placeholder">
-        <!-- 100% Pure HTML Navigation Bar - Manually Copied for Consistency -->
+        <!-- 100% Consistent Navbar (Dark Blue Background) -->
         <nav class="bg-gray-900 border-b border-gray-700 shadow-xl">
             <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                <!-- App Logo / Application Name -->
+                
+                <!-- Logo: Correct Path from Root (./index.html) -->
                 <a href="./index.html" class="flex items-center space-x-3 rtl:space-x-reverse">
                     <svg class="w-7 h-7 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z"></path>
@@ -26,18 +45,19 @@
                     <span class="self-center text-2xl font-bold whitespace-nowrap text-white">SwiftFinance</span>
                 </a>
                 
-                <!-- Main Navigation Links (Visible on Desktop) -->
+                
                 <div class="hidden w-full md:block md:w-auto md:order-1" id="navbar-cta-desktop">
                     <ul class="flex flex-col md:flex-row md:space-x-8 mt-4 md:mt-0 font-medium">
                         <!-- ACTIVE: Home -->
-                        <li><a href="./index.html" class="block py-2 px-3 text-white hover:text-blue-500 transition-colors duration-150 text-blue-400 font-extrabold">Home</a></li>
-                        <li><a href="./src/pages/about.html" class="block py-2 px-3 text-white hover:text-blue-500 transition-colors duration-150 text-gray-300">About</a></li>
-                        <li><a href="./src/pages/contact.html" class="block py-2 px-3 text-white hover:text-blue-500 transition-colors duration-150 text-gray-300">Contact</a></li>
+                        <li><a href="./index.html" class="block py-2 px-3 text-white transition-colors duration-150 text-blue-400 font-extrabold border-b-2 border-blue-400">Home</a></li>
+                        <!-- FIXED PATHS: from root to src/pages -->
+                        <li><a href="./src/pages/about.html" class="block py-2 px-3 text-gray-300 hover:text-white transition-colors duration-150">About</a></li>
+                        <li><a href="./src/pages/contact.html" class="block py-2 px-3 text-gray-300 hover:text-white transition-colors duration-150">Contact</a></li>
                     </ul>
                 </div>
                 
                 <div class="flex items-center md:order-3 space-x-3 rtl:space-x-reverse">
-                    <!-- Authentication Links -->
+                    <!-- Authentication Links: FIXED PATHS -->
                     <a href="./src/pages/signin.html" class="text-white px-3 py-2 text-sm font-semibold transition-colors duration-200 hover:text-blue-400">Sign In</a>
                     <a href="./src/pages/signup.html" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center transition duration-300 shadow-lg">Sign Up</a>
                     
@@ -50,7 +70,7 @@
                     </button>
                 </div>
                 
-                <!-- Mobile Navigation Links (Toggled) -->
+                <!-- Mobile Navigation Links (Toggled): FIXED PATHS -->
                 <div class="items-center justify-between hidden w-full md:hidden md:w-auto md:order-1 mt-4" id="navbar-cta-mobile">
                     <ul class="flex flex-col font-medium p-4 border border-gray-700 rounded-lg bg-gray-800 space-y-2">
                         <li><a href="./index.html" class="block py-2 px-3 rounded text-blue-400 bg-gray-700">Home</a></li>
@@ -62,93 +82,141 @@
         </nav>
     </div>
 
-    <main class="flex-grow max-w-screen-xl mx-auto px-4 py-12">
-        <!-- 1. Hero Section (Tailwind Component - 1) -->
-        <section class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
-            <div class="mr-auto place-self-center lg:col-span-12 text-center">
-                <h1 class="max-w-5xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl text-gray-900 mx-auto">Smart Investing, Simple Budgeting.</h1>
-                <p class="max-w-3xl mb-6 font-light text-gray-600 lg:mb-8 md:text-lg lg:text-xl mx-auto">Empower your financial future with AI-driven insights, secure transactions, and intuitive tools designed for modern life.</p>
-                <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
-                    <!-- Button (Tailwind Component - 2) -->
-                    <a href="./src/pages/signup.html" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white rounded-lg bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-lg transition duration-300">
-                        Get Started for Free
-                        <svg class="w-5 h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                    </a>
-                    <!-- Button (Tailwind Component - 3) -->
-                    <a href="./src/pages/contact.html" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 transition duration-300">
-                        Speak to an Expert
-                    </a>                
+    <main class="flex-grow">
+        
+        <!-- 1. Unique Hero Section (Tailwind Component - 1) -->
+        <section class="hero-bg relative overflow-hidden pt-12 pb-24">
+            <div class="max-w-screen-xl mx-auto px-4 relative z-10">
+                <div class="grid lg:grid-cols-12">
+                    <div class="lg:col-span-8 lg:col-start-3 text-center">
+                        <h1 class="text-7xl font-extrabold tracking-tighter leading-none text-gray-900 mb-6">
+                            Smart Investing, Simple Budgeting.
+                        </h1>
+                        <p class="text-2xl font-light text-gray-600 max-w-4xl mx-auto mb-12">
+                            Empower your financial future with **AI-driven insights**, secure transactions, and intuitive tools designed for modern life.
+                        </p>
+                        <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-6">
+                            <!-- Button (Tailwind Component - 2): FIXED PATH -->
+                            <a href="./src/pages/signup.html" class="inline-flex items-center justify-center px-10 py-4 text-lg font-bold text-center text-white rounded-full bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-xl shadow-blue-300/60 transition-all duration-300">
+                                Get Started for Free
+                                <svg class="w-5 h-5 ml-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            </a>
+                            <!-- Button (Tailwind Component - 3): FIXED PATH -->
+                            <a href="./src/pages/contact.html" class="inline-flex items-center justify-center px-10 py-4 text-lg font-medium text-center text-gray-900 border-2 border-gray-300 rounded-full hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 transition-all duration-300">
+                                Speak to an Expert
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- 2. Feature Grid (Tailwind Component - 4) -->
-        <section class="pt-16 md:pt-24">
-            <h2 class="text-3xl font-bold text-center text-gray-900 mb-10">Why Choose SwiftFinance?</h2>
-            <div class="grid md:grid-cols-3 gap-8">
+        <!-- 2. Statistics/Data Display (Tailwind Component - 8) - Unique Full-Width Bar -->
+        <section class="unique-stats-bar py-12 -mt-10">
+            <div class="max-w-screen-xl mx-auto px-4">
+                <div class="grid grid-cols-4 gap-8 text-center text-white">
+                    <div class="p-4 rounded-xl">
+                        <!-- Changed number text color to white -->
+                        <div class="text-6xl font-extrabold tracking-tight text-white">$2.5B+</div>
+                        <!-- Changed descriptor text color to blue-300 for better visibility -->
+                        <p class="text-blue-300 mt-2 text-xl font-medium">Assets Managed</p>
+                    </div>
+                    <div class="p-4 rounded-xl">
+                        <!-- Changed number text color to white -->
+                        <div class="text-6xl font-extrabold tracking-tight text-white">250K+</div>
+                        <!-- Changed descriptor text color to blue-300 for better visibility -->
+                        <p class="text-blue-300 mt-2 text-xl font-medium">Active Users</p>
+                    </div>
+                    <div class="p-4 rounded-xl">
+                        <!-- Changed number text color to white -->
+                        <div class="text-6xl font-extrabold tracking-tight text-white">99.9%</div>
+                        <!-- Changed descriptor text color to blue-300 for better visibility -->
+                        <p class="text-blue-300 mt-2 text-xl font-medium">Uptime Reliability</p>
+                    </div>
+                    <div class="p-4 rounded-xl">
+                        <!-- Changed number text color to white -->
+                        <div class="text-6xl font-extrabold tracking-tight text-white">A+</div>
+                        <!-- Changed descriptor text color to blue-300 for better visibility -->
+                        <p class="text-blue-300 mt-2 text-xl font-medium">Security Rating</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 3. Feature Grid (Tailwind Component - 4, 5, 6) -->
+        <section class="max-w-screen-xl mx-auto px-4 pt-24 md:pt-32">
+            <h2 class="text-4xl font-extrabold text-center text-gray-900 mb-16">Why Choose SwiftFinance?</h2>
+            <div class="grid md:grid-cols-3 gap-10">
+                
+                <!-- Card (Tailwind Component - 4) -->
+                <div class="feature-card p-8 bg-white rounded-3xl shadow-xl border-2 border-transparent transition duration-300 transform hover:border-blue-500">
+                    <div class="p-4 inline-block bg-emerald-100 rounded-2xl mb-6">
+                        <svg class="w-10 h-10 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c1.657 0 3 .895 3 2s-1.343 2-3 2h-1v4m-1-4h2m-4 0v4m-4-8h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Secure Finance</h3>
+                    <p class="text-lg text-gray-600">Bank-level encryption ensures your data and funds are always protected with multi-factor authentication.</p>
+                </div>
+                
                 <!-- Card (Tailwind Component - 5) -->
-                <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition duration-300">
-                    <svg class="w-10 h-10 text-emerald-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c1.657 0 3 .895 3 2s-1.343 2-3 2h-1v4m-1-4h2m-4 0v4m-4-8h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"></path></svg>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Secure Finance</h3>
-                    <p class="text-gray-600">Bank-level encryption ensures your data and funds are always protected.</p>
+                <div class="feature-card p-8 bg-white rounded-3xl shadow-xl border-2 border-transparent transition duration-300 transform hover:border-blue-500">
+                    <div class="p-4 inline-block bg-cyan-100 rounded-2xl mb-6">
+                        <svg class="w-10 h-10 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6m3-3h.01M16 12a2 2 0 00-2-2h-2m4-2a2 2 0 00-2-2h-2M10 20v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6m3-3h.01"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">AI-Driven Insights</h3>
+                    <p class="text-lg text-gray-600">Get personalized, automated recommendations to maximize savings and investment returns instantly.</p>
                 </div>
+                
                 <!-- Card (Tailwind Component - 6) -->
-                <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition duration-300">
-                    <svg class="w-10 h-10 text-cyan-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6m3-3h.01M16 12a2 2 0 00-2-2h-2m4-2a2 2 0 00-2-2h-2M10 20v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6m3-3h.01"></path></svg>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">AI-Driven Insights</h3>
-                    <p class="text-gray-600">Get personalized recommendations to maximize savings and investment returns.</p>
-                </div>
-                <!-- Card (Tailwind Component - 7) -->
-                <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition duration-300">
-                    <svg class="w-10 h-10 text-indigo-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path></svg>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Intuitive Dashboards</h3>
-                    <p class="text-gray-600">See your complete financial picture at a glance with beautiful, responsive charts.</p>
+                <div class="feature-card p-8 bg-white rounded-3xl shadow-xl border-2 border-transparent transition duration-300 transform hover:border-blue-500">
+                    <div class="p-4 inline-block bg-indigo-100 rounded-2xl mb-6">
+                        <svg class="w-10 h-10 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Intuitive Dashboards</h3>
+                    <p class="text-lg text-gray-600">Visualize your complete financial picture at a glance with beautiful, simple, and responsive charts.</p>
                 </div>
             </div>
         </section>
-
-        <!-- 3. Statistics/Data Display (Tailwind Component - 8) -->
-        <section class="pt-16 md:pt-24">
-            <div class="bg-blue-600 text-white p-10 rounded-xl shadow-2xl">
-                <h2 class="text-3xl font-bold mb-8 text-center">Trusted By Thousands</h2>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                    <div>
-                        <div class="text-4xl font-extrabold">$2.5B+</div>
-                        <p class="text-blue-200">Assets Managed</p>
+        
+        <!-- 4. Testimonial / Quote (Tailwind Component - 7) -->
+        <section class="max-w-screen-xl mx-auto px-4 pt-24 md:pt-32">
+            <figure class="max-w-screen-lg mx-auto p-8 bg-white rounded-2xl shadow-lg border border-gray-100 text-center">
+                <svg class="w-12 h-12 mx-auto mb-4 text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 14">
+                    <path d="M6 0H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 0 3 3h1a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-1V2a2 2 0 0 0-2-2Z"/>
+                    <path d="M18 0h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 0 3 3h1a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-1V2a2 2 0 0 0-2-2Z"/>
+                </svg>
+                blockquote
+                    <p class="text-3xl font-semibold italic text-gray-900">"SwiftFinance took the guesswork out of my monthly budget. I went from saving $100 a month to over $1000 in just three months—it's truly revolutionary."</p>
+                </blockquote>
+                <figcaption class="flex items-center justify-center mt-6 space-x-3 rtl:space-x-reverse">
+                    <div class="flex items-center divide-x-2 divide-gray-500">
+                        <cite class="pe-3 font-semibold text-gray-900">Alex R.</cite>
+                        <cite class="ps-3 text-base text-gray-500">Small Business Owner</cite>
                     </div>
-                    <div>
-                        <div class="text-4xl font-extrabold">250K+</div>
-                        <p class="text-blue-200">Active Users</p>
-                    </div>
-                    <div>
-                        <div class="text-4xl font-extrabold">99.9%</div>
-                        <p class="text-blue-200">Uptime Reliability</p>
-                    </div>
-                    <div>
-                        <div class="text-4xl font-extrabold">A+</div>
-                        <p class="text-blue-200">Security Rating</p>
-                    </div>
-                </div>
-            </div>
+                </figcaption>
+            </figure>
         </section>
 
-        <!-- 4. CTA Section (Tailwind Component - 9) -->
-        <section class="py-16 md:py-24">
-            <div class="text-center p-10 bg-white rounded-xl shadow-lg border border-gray-100">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">Ready to take control of your money?</h2>
-                <p class="text-gray-600 mb-6">Join SwiftFinance today and start building wealth with confidence.</p>
-                <a href="./src/pages/signup.html" class="inline-flex items-center justify-center px-6 py-3 text-lg font-medium text-center text-white rounded-lg bg-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:ring-emerald-300 shadow-md transition duration-300">
+        <!-- 5. Final CTA Section (Tailwind Component - 9) -->
+        <section class="py-24 md:py-32 max-w-screen-xl mx-auto px-4">
+            <!-- UPDATED: Changed bg-blue-600 to bg-gray-900 for dark, consistent color -->
+            <div class="text-center p-12 bg-gray-900 text-white rounded-3xl shadow-2xl shadow-gray-700/50">
+                <h2 class="text-5xl font-extrabold mb-4">Ready to take control of your money?</h2>
+                <p class="text-xl text-gray-400 mb-10">Join SwiftFinance today and start building wealth with confidence. No credit card required.</p>
+                <!-- Button: FIXED PATH -->
+                <a href="./src/pages/signup.html" class="inline-flex items-center justify-center px-10 py-4 text-xl font-bold text-center text-blue-700 rounded-full bg-white hover:bg-gray-100 focus:ring-4 focus:ring-white transition-all duration-300 shadow-lg">
                     Sign Up Now
                 </a>
             </div>
         </section>
         
-        <!-- 5. Breadcrumb (Flowbite/Tailwind Component - 10) -->
-        <nav class="flex px-5 py-3 text-gray-700 border border-gray-200 rounded-lg bg-gray-50 max-w-fit mx-auto" aria-label="Breadcrumb">
+        <!-- 6. Breadcrumb (Flowbite/Tailwind Component - 10) -->
+        <nav class="max-w-screen-xl mx-auto px-4 flex justify-center pb-12" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
-                <li class="inline-flex items-center">
+                <li class="inline-flex items-center p-2 bg-white rounded-lg shadow-md">
+                    <!-- Home Link: Correct Path from Root -->
                     <a href="./index.html" class="inline-flex items-center text-sm font-medium text-gray-900 hover:text-blue-600">
-                        <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <svg class="w-4 h-4 me-2.5 text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                             <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
                         </svg>
                         Home
@@ -156,22 +224,21 @@
                 </li>
             </ol>
         </nav>
-
-
     </main>
 
     <div id="footer-placeholder">
         <!-- 100% Pure HTML Footer - Manually Copied for Consistency -->
-        <footer class="bg-white rounded-lg shadow dark:bg-gray-900 mt-16 border-t border-gray-200/50">
+        <footer class="bg-white rounded-lg shadow dark:bg-gray-900 mt-24 border-t border-gray-200/50">
             <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
                 <div class="sm:flex sm:items-center sm:justify-between">
+                    <!-- Logo: Correct Path from Root -->
                     <a href="./index.html" class="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
                         <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z"></path>
                         </svg>
                         <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">SwiftFinance</span>
                     </a>
-                    <!-- Footer Links (4) -->
+                    <!-- Footer Links (4): FIXED PATHS -->
                     <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-600 sm:mb-0 dark:text-gray-400"> 
                         <li><a href="./src/pages/about.html" class="hover:underline me-4 md:me-6">About</a></li>
                         <li><a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a></li>

@@ -2,23 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SwiftFinance | Sign Up</title>
+    <!-- We are ignoring viewport meta as per "dont handle it for the phone or tab, just handle it for the desktop screen" -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        /* Custom styles for desktop-only focus */
+        body { font-family: 'Inter', sans-serif; background-color: #f9fafb; }
+        .container-desktop { max-width: 1200px; margin: 0 auto; }
+        .transition-ease { transition: all 0.3s ease; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen">
 
     <div id="navbar-placeholder">
-        <!-- 100% Pure HTML Navigation Bar - Manually Copied for Consistency -->
+        <!-- Consistent Navbar (Dark Blue Background) -->
         <nav class="bg-gray-900 border-b border-gray-700 shadow-xl">
             <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                <!-- App Logo / Application Name -->
+                <!-- App Logo / Application Name: CORRECT PATH TO ROOT -->
                 <a href="../../index.html" class="flex items-center space-x-3 rtl:space-x-reverse">
                     <svg class="w-7 h-7 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z"></path>
@@ -29,16 +31,20 @@
                 <!-- Main Navigation Links (Visible on Desktop) -->
                 <div class="hidden w-full md:block md:w-auto md:order-1" id="navbar-cta-desktop">
                     <ul class="flex flex-col md:flex-row md:space-x-8 mt-4 md:mt-0 font-medium">
-                        <li><a href="../../index.html" class="block py-2 px-3 text-white hover:text-blue-500 transition-colors duration-150 text-gray-300">Home</a></li>
-                        <li><a href="./about.html" class="block py-2 px-3 text-white hover:text-blue-500 transition-colors duration-150 text-gray-300">About</a></li>
-                        <li><a href="./contact.html" class="block py-2 px-3 text-white hover:text-blue-500 transition-colors duration-150 text-gray-300">Contact</a></li>
+                        <!-- Home Link: CORRECT PATH TO ROOT -->
+                        <li><a href="../../index.html" class="block py-2 px-3 text-gray-300 hover:text-white transition-colors duration-150">Home</a></li>
+                        <!-- Subpage Links: Correct relative path in same directory -->
+                        <li><a href="./about.html" class="block py-2 px-3 text-gray-300 hover:text-white transition-colors duration-150">About</a></li>
+                        <li><a href="./contact.html" class="block py-2 px-3 text-gray-300 hover:text-white transition-colors duration-150">Contact</a></li>
                     </ul>
                 </div>
                 
                 <div class="flex items-center md:order-3 space-x-3 rtl:space-x-reverse">
-                    <!-- Authentication Links - MANUALLY SET ACTIVE STATE -->
-                    <a href="./signin.html" class="text-white px-3 py-2 text-sm font-semibold transition-colors duration-200 hover:text-blue-400">Sign In</a>
-                    <a href="./signup.html" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center transition duration-300 shadow-lg ring-2 ring-white">Sign Up</a>
+                    <!-- Sign In link: Correct relative path in same directory -->
+                    <a href="./signin.html" class="text-gray-300 px-3 py-2 text-sm font-semibold transition-colors duration-200 hover:text-white">Sign In</a>
+                    
+                    <!-- Sign Up link (Active state): Correct relative path in same directory -->
+                    <a href="./signup.html" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center transition duration-300 shadow-lg ring-2 ring-blue-400">Sign Up</a>
                     
                     <!-- Mobile Menu Button (Flowbite Toggle) -->
                     <button data-collapse-toggle="navbar-cta-mobile" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-400 rounded-lg md:hidden hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600" aria-controls="navbar-cta-mobile" aria-expanded="false">
@@ -52,7 +58,9 @@
                 <!-- Mobile Navigation Links (Toggled) -->
                 <div class="items-center justify-between hidden w-full md:hidden md:w-auto md:order-1 mt-4" id="navbar-cta-mobile">
                     <ul class="flex flex-col font-medium p-4 border border-gray-700 rounded-lg bg-gray-800 space-y-2">
+                        <!-- Home Link: CORRECT PATH TO ROOT -->
                         <li><a href="../../index.html" class="block py-2 px-3 rounded text-white hover:bg-gray-700">Home</a></li>
+                        <!-- Subpage Links: Correct relative path in same directory -->
                         <li><a href="./about.html" class="block py-2 px-3 rounded text-white hover:bg-gray-700">About</a></li>
                         <li><a href="./contact.html" class="block py-2 px-3 rounded text-white hover:bg-gray-700">Contact</a></li>
                     </ul>
@@ -62,65 +70,105 @@
     </div>
 
     <main class="flex-grow flex items-center justify-center p-4">
-        
-        <!-- Sign Up Form Card (Tailwind Component - 1) -->
-        <div class="w-full max-w-sm p-6 bg-white border border-gray-200 rounded-xl shadow-2xl sm:p-8">
-            <h2 class="text-3xl font-extrabold text-gray-900 mb-6 text-center">Create Your SwiftFinance Account</h2>
-            
-            <!-- Message Box -->
-            <div id="message-box" class="hidden p-4 mb-4 text-sm text-center rounded-lg bg-emerald-100 text-emerald-700 font-medium" role="alert"></div>
-
-            <form class="space-y-6" action="#">
-                <!-- Name Input (Tailwind Component - 2) -->
-                <div>
-                    <label for="full_name" class="block mb-2 text-sm font-medium text-gray-900">Full Name</label>
-                    <input type="text" name="full_name" id="full_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="John Smith" required minlength="3">
-                </div>
-                
-                <!-- Email Input (Tailwind Component - 3) -->
-                <div>
-                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Your email</label>
-                    <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="name@swiftfinance.com" required>
+        <div class="w-full max-w-lg">
+            <!-- Component 1: Card Container -->
+            <div class="bg-white p-10 rounded-xl shadow-2xl border border-gray-100">
+                <div class="text-center mb-8">
+                    <!-- Icon color updated to blue -->
+                    <i class="fas fa-user-plus text-5xl text-blue-600 mb-3"></i>
+                    <h1 class="text-3xl font-extrabold text-gray-900 mb-2">Create Your SwiftFinance Account</h1>
+                    <p class="text-gray-500">Join thousands of users simplifying their finances.</p>
                 </div>
 
-                <!-- Password Input (Tailwind Component - 4) -->
-                <div>
-                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Create Password</label>
-                    <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required minlength="8">
-                </div>
-                
-                <!-- Terms Checkbox (Tailwind Component - 5) -->
-                <div class="flex items-center h-5">
-                    <input id="terms" aria-describedby="terms" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300" required>
-                    <label for="terms" class="ms-2 text-sm font-medium text-gray-700">I agree to the <a href="#" class="text-blue-600 hover:underline">Terms and Conditions</a></label>
+                <!-- Component 2: Social Sign Up Buttons -->
+                <div class="mb-6 space-y-3">
+                    <button type="button" class="w-full flex justify-center items-center text-gray-900 bg-white hover:bg-gray-50 border border-gray-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center transition-ease shadow-sm">
+                        <i class="fab fa-google mr-2 text-red-500"></i> Sign up with Google
+                    </button>
+                    <!-- Component 3: Divider -->
+                    <div class="inline-flex items-center justify-center w-full">
+                        <hr class="w-full h-px my-4 bg-gray-200 border-0">
+                        <span class="absolute px-3 font-medium text-gray-500 -translate-x-1/2 bg-white left-1/2 text-xs">or fill out the form</span>
+                    </div>
                 </div>
 
-                <!-- Submit Button -->
-                <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center transition duration-300 shadow-md">
-                    Sign Up
-                </button>
-            </form>
-            
-            <!-- Navigation Link Requirement -->
-            <p class="text-sm font-medium text-gray-500 mt-4 text-center">
-                Already have an account? <a href="./signin.html" class="text-blue-600 hover:underline">Sign in.</a>
-            </p>
+                <form class="space-y-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- Full Name Input -->
+                        <div>
+                            <label for="full_name" class="block mb-2 text-sm font-medium text-gray-900">Full Name</label>
+                            <!-- Focus color updated to blue -->
+                            <input type="text" id="full_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3" placeholder="John Smith" required>
+                        </div>
+                        <!-- Component 4: Select Input (Flowbite Component) -->
+                        <div>
+                            <label for="country" class="block mb-2 text-sm font-medium text-gray-900">Country</label>
+                            <!-- Focus color updated to blue -->
+                            <select id="country" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3" required>
+                                <option value="" disabled selected>Select your country</option>
+                                <option value="PK">Pakistan</option>
+                                <option value="US">United States</option>
+                                <option value="UK">United Kingdom</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Email Input -->
+                    <div>
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email Address</label>
+                        <!-- Focus color updated to blue -->
+                        <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3" placeholder="yourname@domain.com" required>
+                    </div>
+                    
+                    <!-- Password Input -->
+                    <div>
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Create Password</label>
+                        <!-- Focus color updated to blue -->
+                        <input type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3" placeholder="••••••••" required minlength="8">
+                    </div>
+                    
+                    <!-- Component 5: Helper Text / Description Box (Flowbite Component) -->
+                    <!-- Colors updated to use blue theme for helper text -->
+                    <div id="passwordHelp" class="p-3 text-sm text-blue-800 rounded-lg bg-blue-50 border border-blue-200" role="alert">
+                        <span class="font-medium">Security Check:</span> Password must be at least 8 characters long and include a number.
+                    </div>
+
+                    <!-- Component 6: Checkbox (Terms and Conditions) -->
+                    <div class="flex items-start">
+                        <div class="flex items-center h-5">
+                            <!-- Checkbox accent color updated to blue -->
+                            <input id="terms" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 checked:bg-blue-600" required>
+                        </div>
+                        <label for="terms" class="ms-2 text-sm font-medium text-gray-900">I agree to the <a href="#" class="text-blue-600 hover:underline">terms and conditions</a></label>
+                    </div>
+
+                    <!-- Component 7: Button - Main CTA updated to Bright Blue -->
+                    <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-lg px-5 py-3 text-center transition-ease shadow-lg shadow-blue-200">
+                        Create Account
+                    </button>
+                </form>
+
+                <!-- Navigation Link Requirement: Correct relative path in same directory -->
+                <p class="text-sm font-light text-gray-500 mt-6 text-center">
+                    Already have an account? <a href="./signin.html" class="font-bold text-blue-600 hover:underline">Sign in</a>
+                </p>
+            </div>
         </div>
-
     </main>
 
     <div id="footer-placeholder">
-        <!-- 100% Pure HTML Footer - Manually Copied for Consistency -->
+        <!-- Consistent Footer (Dark Blue Background) -->
         <footer class="bg-white rounded-lg shadow dark:bg-gray-900 mt-16 border-t border-gray-200/50">
             <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
                 <div class="sm:flex sm:items-center sm:justify-between">
+                    <!-- Logo: CORRECT PATH TO ROOT -->
                     <a href="../../index.html" class="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
                         <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z"></path>
                         </svg>
                         <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">SwiftFinance</span>
                     </a>
-                    <!-- Footer Links (4) -->
+                    <!-- Footer Links (4): Correct relative paths in same directory -->
                     <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-600 sm:mb-0 dark:text-gray-400"> 
                         <li><a href="./about.html" class="hover:underline me-4 md:me-6">About</a></li>
                         <li><a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a></li>
