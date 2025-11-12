@@ -1,137 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>SwiftFinance | Sign In</title>
-    <!-- We are ignoring viewport meta as per "dont handle it for the phone or tab, just handle it for the desktop screen" -->
+    <link rel="icon" type="image/x-icon" href="../../assests/favicon/favicon.ico">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <script type="module" src="../../utils/themeUtils.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <style>
         /* Custom styles for desktop-only focus */
-        body { font-family: 'Inter', sans-serif; background-color: #f9fafb; }
-        .container-desktop { max-width: 1200px; margin: 0 auto; }
-        .transition-ease { transition: all 0.3s ease; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb;
+        }
+
+        .container-desktop {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .transition-ease {
+            transition: all 0.3s ease;
+        }
     </style>
 </head>
+
 <body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen">
 
-    <div id="navbar-placeholder">
-        <!-- Consistent Navbar (Dark Blue Background) -->
-        <nav class="bg-gray-900 border-b border-gray-700 shadow-xl">
-            <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                <!-- App Logo / Application Name: Correctly links to parent directory index.html -->
-                <a href="../../index.html" class="flex items-center space-x-3 rtl:space-x-reverse">
-                    <svg class="w-7 h-7 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z"></path>
-                    </svg>
-                    <span class="self-center text-2xl font-bold whitespace-nowrap text-white">SwiftFinance</span>
-                </a>
-                
-                <!-- Main Navigation Links (Visible on Desktop) -->
-                <div class="hidden w-full md:block md:w-auto md:order-1" id="navbar-cta-desktop">
-                    <ul class="flex flex-col md:flex-row md:space-x-8 mt-4 md:mt-0 font-medium">
-                        <!-- Corrected paths: These are in src/pages, so Home goes up one level (../index.html) -->
-                        <li><a href="../../index.html" class="block px-3 py-2 text-gray-300 hover:text-white transition-colors duration-150">Home</a></li>
-                        <!-- Corrected paths: About and Contact are in the same directory, so they link directly (./) -->
-                        <li><a href="./about.html" class="block px-3 py-2 text-gray-300 hover:text-white transition-colors duration-150">About</a></li>
-                        <li><a href="./contact.html" class="block px-3 py-2 text-gray-300 hover:text-white transition-colors duration-150">Contact</a></li>
-                    </ul>
-                </div>
-                
-                <div class="flex items-center md:order-3 space-x-3 rtl:space-x-reverse">
-                    <!-- Sign In link (Active state with ring/outline) -->
-                    <a href="./signin.html" class="text-white px-3 py-2 text-sm font-semibold transition-colors duration-200 hover:text-blue-400 ring-2 ring-blue-400 rounded-lg">Sign In</a>
+    <nav class="sticky top-0 z-50 bg-gray-900 border-b border-gray-700 shadow-xl">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="../../index.html" class="flex items-center space-x-3 rtl:space-x-reverse">
+                <svg class="w-7 h-7 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z">
+                    </path>
+                </svg>
+                <span class="self-center text-2xl font-bold whitespace-nowrap text-white">SwiftFinance</span>
+            </a>
 
-                    <!-- Sign Up link (Regular state) -->
-                    <a href="./signup.html" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center transition duration-300 shadow-lg">Sign Up</a>
-                    
-                    <!-- Mobile Menu Button (Flowbite Toggle) -->
-                    <button data-collapse-toggle="navbar-cta-mobile" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-400 rounded-lg md:hidden hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600" aria-controls="navbar-cta-mobile" aria-expanded="false">
-                        <span class="sr-only">Open main menu</span>
-                        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
-                        </svg>
-                    </button>
-                </div>
-                
-                <!-- Mobile Navigation Links (Toggled) -->
-                <div class="items-center justify-between hidden w-full md:hidden md:w-auto md:order-1 mt-4" id="navbar-cta-mobile">
-                    <ul class="flex flex-col font-medium p-4 border border-gray-700 rounded-lg bg-gray-800 space-y-2">
-                        <li><a href="../../index.html" class="block py-2 px-3 rounded text-white hover:bg-gray-700">Home</a></li>
-                        <li><a href="./about.html" class="block py-2 px-3 rounded text-white hover:bg-gray-700">About</a></li>
-                        <li><a href="./contact.html" class="block py-2 px-3 rounded text-white hover:bg-gray-700">Contact</a></li>
-                    </ul>
-                </div>
+            <div class="hidden w-full md:block md:w-auto md:order-1" id="navbar-cta-desktop">
+                <ul class="flex flex-col md:flex-row md:space-x-8 mt-4 md:mt-0 font-medium">
+                    <li><a href="../../index.html"
+                            class="block px-3 py-2 text-gray-300 hover:text-white transition-colors duration-150">Home</a>
+                    </li>
+                    <li><a href="./about.html"
+                            class="block px-3 py-2 text-gray-300 hover:text-white transition-colors duration-150">About</a>
+                    </li>
+                    <li><a href="./contact.html"
+                            class="block px-3 py-2 text-gray-300 hover:text-white transition-colors duration-150">Contact</a>
+                    </li>
+                    <li><a href="./task_manager.html"
+                            class="block py-2 px-3 text-gray-300 hover:text-white transition-colors duration-150">Tracker</a>
+                    </li>
+                </ul>
             </div>
-        </nav>
-    </div>
 
+            <div class="flex items-center md:order-3 space-x-3 rtl:space-x-reverse">
+                <button id="theme-toggle" type="button"
+                    class="p-2 rounded-full text-gray-400 hover:text-primary-purple hover:bg-gray-800 transition duration-150 focus:outline-none flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+                        </path>
+                    </svg>
+                </button>
+                <a href="./signin.html"
+                    class="text-white px-3 py-2 text-sm font-semibold transition-colors duration-200 hover:text-blue-400 ring-2 ring-blue-400 rounded-lg">Sign
+                    In</a>
+
+                <a href="./signup.html"
+                    class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center transition duration-300 shadow-lg">Sign
+                    Up</a>
+
+                <button data-collapse-toggle="navbar-cta-mobile" type="button"
+                    class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-400 rounded-lg md:hidden hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600"
+                    aria-controls="navbar-cta-mobile" aria-expanded="false">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 17 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M1 1h15M1 7h15M1 13h15" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="items-center justify-between hidden w-full md:hidden md:w-auto md:order-1 mt-4"
+                id="navbar-cta-mobile">
+                <ul class="flex flex-col font-medium p-4 border border-gray-700 rounded-lg bg-gray-800 space-y-2">
+                    <li><a href="../../index.html"
+                            class="block py-2 px-3 rounded text-white hover:bg-gray-700">Home</a></li>
+                    <li><a href="./about.html"
+                            class="block py-2 px-3 rounded text-white hover:bg-gray-700">About</a></li>
+                    <li><a href="./contact.html"
+                            class="block py-2 px-3 rounded text-white hover:bg-gray-700">Contact</a></li>
+                    <li><a href="./task_manager.html"
+                            class="block py-2 px-3 rounded text-white hover:bg-gray-700">Tracker</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <main class="flex-grow flex items-center justify-center p-4">
         <div class="w-full max-w-md">
-            <!-- Component 1: Card Container with Logo -->
-            <div class="bg-white p-8 rounded-xl shadow-2xl border border-gray-100">
+            <div class="bg-white p-8 rounded-xl shadow-2xl border border-gray-100 dark:bg-gray-900 dark:border-gray-700">
                 <div class="text-center mb-8">
                     <i class="fas fa-fingerprint text-5xl text-blue-600 mb-3"></i>
-                    <h1 class="text-3xl font-extrabold text-gray-900 mb-2">Access Your Dashboard</h1>
-                    <p class="text-gray-500">Sign in to continue your financial journey.</p>
+                    <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-2">Access Your Dashboard</h1>
+                    <p class="text-gray-500 dark:text-gray-400">Sign in to continue your financial journey.</p>
                 </div>
 
-                <!-- Component 2: Social Sign In Buttons (Flowbite Buttons/Dividers) -->
                 <div class="mb-6 space-y-3">
-                    <button type="button" class="w-full flex justify-center items-center text-gray-900 bg-white hover:bg-gray-50 border border-gray-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center transition-ease shadow-sm">
+                    <button type="button"
+                        class="w-full flex justify-center items-center text-gray-900 bg-white hover:bg-gray-50 border border-gray-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center transition-ease shadow-sm dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700">
                         <i class="fab fa-google mr-2 text-red-500"></i> Continue with Google
                     </button>
-                    <button type="button" class="w-full flex justify-center items-center text-white bg-gray-900 hover:bg-gray-800 font-semibold rounded-lg text-sm px-5 py-2.5 text-center transition-ease shadow-sm">
+                    <button type="button"
+                        class="w-full flex justify-center items-center text-white bg-gray-900 hover:bg-gray-800 font-semibold rounded-lg text-sm px-5 py-2.5 text-center transition-ease shadow-sm dark:bg-gray-800 dark:hover:bg-gray-700">
                         <i class="fab fa-apple mr-2"></i> Continue with Apple
                     </button>
-                    <!-- Component 3: Divider (Flowbite Component) -->
                     <div class="inline-flex items-center justify-center w-full">
-                        <hr class="w-full h-px my-4 bg-gray-200 border-0">
-                        <span class="absolute px-3 font-medium text-gray-500 -translate-x-1/2 bg-white left-1/2 text-xs">or</span>
+                        <hr class="w-full h-px my-4 bg-gray-200 border-0 dark:bg-gray-700">
+                        <span
+                            class="absolute px-3 font-medium text-gray-500 -translate-x-1/2 bg-white left-1/2 text-xs dark:bg-gray-900 dark:text-gray-500">or</span>
                     </div>
                 </div>
 
-                <!-- Sign-In Form -->
                 <form class="space-y-6">
-                    <!-- Email Input -->
                     <div>
-                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Your Email</label>
-                        <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3" placeholder="name@swiftfinance.com" required>
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Email</label>
+                        <input type="email" id="email"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+                            placeholder="name@swiftfinance.com" required>
                     </div>
 
-                    <!-- Component 4: Password Input with Toggle (Flowbite Component) -->
                     <div>
-                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Your Password</label>
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Password</label>
                         <div class="relative">
-                            <input type="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 pr-10" required minlength="8">
-                            <button type="button" data-input-id="password" class="absolute inset-y-0 end-0 flex items-center pe-3 text-gray-500 hover:text-blue-600 toggle-password">
+                            <input type="password" id="password" placeholder="••••••••"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 pr-10 dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+                                required minlength="8">
+                            <button type="button" data-input-id="password"
+                                class="absolute inset-y-0 end-0 flex items-center pe-3 text-gray-500 hover:text-blue-600 toggle-password">
                                 <i class="fas fa-eye-slash"></i>
                             </button>
                         </div>
                     </div>
 
                     <div class="flex items-center justify-between">
-                        <!-- Component 5: Checkbox (Flowbite Component) -->
                         <div class="flex items-start">
                             <div class="flex items-center h-5">
-                                <input id="remember" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 checked:bg-blue-600">
+                                <input id="remember" type="checkbox"
+                                    class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 checked:bg-blue-600 dark:bg-gray-800 dark:border-gray-600">
                             </div>
-                            <label for="remember" class="ms-2 text-sm font-medium text-gray-900">Remember me</label>
+                            <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-white">Remember me</label>
                         </div>
 
                         <a href="#" class="text-sm font-medium text-blue-600 hover:underline">Forgot Password?</a>
                     </div>
 
-                    <!-- Component 6: Button - Main CTA updated to Bright Blue -->
-                    <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-lg px-5 py-3 text-center transition-ease shadow-lg shadow-blue-200">
+                    <button type="submit"
+                        class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-lg px-5 py-3 text-center transition-ease shadow-lg shadow-blue-200">
                         Sign In
                     </button>
                 </form>
 
-                <!-- Navigation Link Requirement -->
-                <p class="text-sm font-light text-gray-500 mt-6 text-center">
-                    Don't have an account? <a href="./signup.html" class="font-bold text-blue-600 hover:underline">Sign up</a>
+                <p class="text-sm font-light text-gray-500 dark:text-gray-400 mt-6 text-center">
+                    Don't have an account? <a href="./signup.html" class="font-bold text-blue-600 hover:underline">Sign
+                        up</a>
                 </p>
             </div>
         </div>
@@ -140,12 +179,12 @@
     <script>
         // Custom JS to toggle password visibility (for Component 4)
         document.querySelectorAll('.toggle-password').forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 const inputId = this.getAttribute('data-input-id');
                 const passwordInput = document.getElementById(inputId);
                 const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
                 passwordInput.setAttribute('type', type);
-                
+
                 // Toggle the eye icon
                 this.querySelector('i').classList.toggle('fa-eye');
                 this.querySelector('i').classList.toggle('fa-eye-slash');
@@ -154,19 +193,21 @@
     </script>
 
     <div id="footer-placeholder">
-        <!-- Consistent Footer (Dark Blue Background) -->
         <footer class="bg-white rounded-lg shadow dark:bg-gray-900 mt-16 border-t border-gray-200/50">
             <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
                 <div class="sm:flex sm:items-center sm:justify-between">
-                    <!-- Corrected path for Logo in Footer -->
                     <a href="../../index.html" class="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
-                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z"></path>
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z">
+                            </path>
                         </svg>
-                        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">SwiftFinance</span>
+                        <span
+                            class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">SwiftFinance</span>
                     </a>
-                    <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-600 sm:mb-0 dark:text-gray-400"> 
-                        <!-- Corrected paths for Footer links -->
+                    <ul
+                        class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-600 sm:mb-0 dark:text-gray-400">
                         <li><a href="./about.html" class="hover:underline me-4 md:me-6">About</a></li>
                         <li><a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a></li>
                         <li><a href="#" class="hover:underline me-4 md:me-6">Licensing</a></li>
@@ -174,9 +215,11 @@
                     </ul>
                 </div>
                 <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-                <span class="block text-sm text-gray-600 sm:text-center dark:text-gray-400">© 2025 SwiftFinance™. All Rights Reserved.</span> 
+                <span class="block text-sm text-gray-600 sm:text-center dark:text-gray-400">© 2025 SwiftFinance™. All
+                    Rights Reserved.</span>
             </div>
         </footer>
     </div>
 </body>
+
 </html>

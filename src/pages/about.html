@@ -4,202 +4,351 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SwiftFinance | About Us</title>
+    
+    <link rel="icon" type="image/x-icon" href="../../assests/favicon/favicon.ico">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
+    <script type="module" src="../../utils/themeUtils.js"></script>
+    <script type="module" src="../scripts/about.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen">
 
-    <div id="navbar-placeholder">
-        <!-- 100% Pure HTML Navigation Bar - Manually Copied for Consistency -->
-        <nav class="bg-gray-900 border-b border-gray-700 shadow-xl">
-            <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                <!-- App Logo / Application Name -->
-                <a href="../../index.html" class="flex items-center space-x-3 rtl:space-x-reverse">
-                    <svg class="w-7 h-7 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z"></path>
-                    </svg>
-                    <span class="self-center text-2xl font-bold whitespace-nowrap text-white">SwiftFinance</span>
-                </a>
-                
-                <!-- Main Navigation Links (Visible on Desktop) -->
-                <div class="hidden w-full md:block md:w-auto md:order-1" id="navbar-cta-desktop">
-                    <ul class="flex flex-col md:flex-row md:space-x-8 mt-4 md:mt-0 font-medium">
-                        <li><a href="../../index.html" class="block py-2 px-3 text-white hover:text-blue-500 transition-colors duration-150 text-gray-300">Home</a></li>
-                        <!-- ACTIVE: About -->
-                        <li><a href="./about.html" class="block py-2 px-3 text-white hover:text-blue-500 transition-colors duration-150 text-blue-400 font-extrabold" aria-current="page">About</a></li>
-                        <li><a href="./contact.html" class="block py-2 px-3 text-white hover:text-blue-500 transition-colors duration-150 text-gray-300">Contact</a></li>
-                    </ul>
-                </div>
-                
-                <div class="flex items-center md:order-3 space-x-3 rtl:space-x-reverse">
-                    <!-- Authentication Links -->
-                    <a href="./signin.html" class="text-white px-3 py-2 text-sm font-semibold transition-colors duration-200 hover:text-blue-400">Sign In</a>
-                    <a href="./signup.html" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center transition duration-300 shadow-lg">Sign Up</a>
-                    
-                    <!-- Mobile Menu Button (Flowbite Toggle) -->
-                    <button data-collapse-toggle="navbar-cta-mobile" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-400 rounded-lg md:hidden hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600" aria-controls="navbar-cta-mobile" aria-expanded="false">
-                        <span class="sr-only">Open main menu</span>
-                        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
-                        </svg>
-                    </button>
-                </div>
-                
-                <!-- Mobile Navigation Links (Toggled) -->
-                <div class="items-center justify-between hidden w-full md:hidden md:w-auto md:order-1 mt-4" id="navbar-cta-mobile">
-                    <ul class="flex flex-col font-medium p-4 border border-gray-700 rounded-lg bg-gray-800 space-y-2">
-                        <li><a href="../../index.html" class="block py-2 px-3 rounded text-white hover:bg-gray-700">Home</a></li>
-                        <li><a href="./about.html" class="block py-2 px-3 rounded text-blue-400 bg-gray-700">About</a></li>
-                        <li><a href="./contact.html" class="block py-2 px-3 rounded text-white hover:bg-gray-700">Contact</a></li>
-                    </ul>
-                </div>
+<body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen"> 
+    
+    <nav class="sticky top-0 z-50 bg-gray-900 border-b border-gray-700 shadow-xl">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="../../index.html" class="flex items-center space-x-3 rtl:space-x-reverse">
+                <svg class="w-7 h-7 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z">
+                    </path>
+                </svg>
+                <span class="self-center text-2xl font-bold whitespace-nowrap text-white">SwiftFinance</span>
+            </a>
+
+            <div class="hidden w-full md:block md:w-auto md:order-1" id="navbar-cta-desktop">
+                <ul class="flex flex-col md:flex-row md:space-x-8 mt-4 md:mt-0 font-medium">
+                    <li><a href="../../index.html"
+                            class="block py-2 px-3 text-white hover:text-blue-500 transition-colors duration-150 text-gray-300">Home</a>
+                    </li>
+                    <li><a href="./about.html"
+                            class="block py-2 px-3 text-white hover:text-blue-500 transition-colors duration-150 text-blue-400 font-extrabold border-b-2 border-blue-400"
+                            aria-current="page">About</a>
+                    </li>
+                    <li><a href="./contact.html"
+                            class="block py-2 px-3 text-white hover:text-blue-500 transition-colors duration-150 text-gray-300">Contact</a>
+                    </li>
+                    <li><a href="./task_manager.html"
+                            class="block py-2 px-3 text-white hover:text-blue-500 transition-colors duration-150 text-gray-300">Tracker</a>
+                    </li>
+                </ul>
             </div>
-        </nav>
-    </div>
 
+            <div class="flex items-center md:order-3 space-x-3 rtl:space-x-reverse">
+                <button id="theme-toggle" type="button"
+                    class="p-2 rounded-full text-gray-400 hover:text-primary-purple hover:bg-gray-800 transition duration-150 focus:outline-none flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+                        </path>
+                    </svg>
+                </button>
+                <a href="./signin.html"
+                    class="text-white px-3 py-2 text-sm font-semibold transition-colors duration-200 hover:text-blue-400">Sign
+                    In</a>
+                <a href="./signup.html"
+                    class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center transition duration-300 shadow-lg">Sign
+                    Up</a>
+
+                <button data-collapse-toggle="navbar-cta-mobile" type="button"
+                    class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-400 rounded-lg md:hidden hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600"
+                    aria-controls="navbar-cta-mobile" aria-expanded="false">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 17 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M1 1h15M1 7h15M1 13h15" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="items-center justify-between hidden w-full md:hidden md:w-auto md:order-1 mt-4"
+                id="navbar-cta-mobile">
+                <ul class="flex flex-col font-medium p-4 border border-gray-700 rounded-lg bg-gray-800 space-y-2">
+                    <li><a href="../../index.html"
+                            class="block py-2 px-3 rounded text-white hover:bg-gray-700">Home</a></li>
+                    <li><a href="./about.html" class="block py-2 px-3 rounded text-blue-400 bg-gray-700">About</a>
+                    </li>
+                    <li><a href="./contact.html"
+                            class="block py-2 px-3 rounded text-white hover:bg-gray-700">Contact</a></li>
+                    <li><a href="./task_manager.html"
+                            class="block py-2 px-3 rounded text-white hover:bg-gray-700">Tracker</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <main class="flex-grow max-w-screen-xl mx-auto px-4 py-12">
-        <h1 class="text-5xl font-extrabold mb-10 text-center text-gray-900 tracking-tight">Our Mission & History</h1>
+        <div class="flex justify-center mb-10">
+            <div class="bg-white inline-block px-4 py-2 rounded-lg shadow-md dark:bg-gray-900">
+                <h1 id="mission" class="text-5xl font-extrabold text-center text-gray-900 tracking-tight dark:text-white">
+                    Our Mission & History
+                </h1>
+            </div>
+        </div>
 
-        <!-- 1. Statistics (Tailwind Component) -->
-        <section class="mb-12 text-center bg-white p-8 rounded-xl shadow-xl border border-gray-100">
-            <h2 class="text-3xl font-bold mb-6 text-blue-600">Driven by Numbers</h2>
+
+        <section class="mb-12 text-center bg-white p-8 rounded-xl shadow-xl dark:bg-gray-900">
+            <h2 class="text-3xl font-bold mb-6 text-blue-600 dark:text-blue-400">Driven by Numbers</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div>
-                    <div class="text-5xl font-extrabold text-blue-600">15 Years</div>
-                    <p class="text-gray-500">In the financial market</p>
+                    <div class="text-5xl font-extrabold text-blue-600 dark:text-blue-400">15 Years</div>
+                    <p class="text-gray-500 dark:text-gray-400">In the financial market</p>
                 </div>
                 <div>
-                    <div class="text-5xl font-extrabold text-blue-600">$500M+</div>
-                    <p class="text-gray-500">Total processed transactions</p>
+                    <div class="text-5xl font-extrabold text-blue-600 dark:text-blue-400">$500M+</div>
+                    <p class="text-gray-500 dark:text-gray-400">Total processed transactions</p>
                 </div>
                 <div>
-                    <div class="text-5xl font-extrabold text-blue-600">99.99%</div>
-                    <p class="text-gray-500">Client satisfaction rate</p>
+                    <div class="text-5xl font-extrabold text-blue-600 dark:text-blue-400">99.99%</div>
+                    <p class="text-gray-500 dark:text-gray-400">Client satisfaction rate</p>
                 </div>
             </div>
         </section>
 
-        <!-- 2. Timeline Component (Flowbite/Tailwind Component) -->
-        <h2 class="text-3xl font-bold mb-8 text-gray-900 border-b pb-4">Our Journey</h2>
-        <ol class="relative border-l-4 border-blue-200 dark:border-blue-700 mb-12"> 
+        <div class="flex justify-start mb-4">
+            <div class="bg-white inline-block px-4 py-2 rounded-lg shadow-md dark:bg-gray-900">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white">
+                    Our Journey
+                </h2>
+            </div>
+        </div>
+
+
+        <ol class="relative border-l-4 border-blue-200 dark:border-blue-700 mb-12">
             <li class="mb-10 ml-6">
-                <span class="absolute flex items-center justify-center w-8 h-8 bg-blue-600 rounded-full -left-4 ring-8 ring-gray-50 dark:ring-gray-50">
-                    <svg class="w-4 h-4 text-white" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"><path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM1 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7H1Z"/></svg>
+                <span
+                    class="absolute flex items-center justify-center w-8 h-8 bg-blue-600 rounded-full -left-4 ring-8 ring-gray-50 dark:ring-gray-800">
+                    <svg class="w-4 h-4 text-white" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM1 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7H1Z" />
+                    </svg>
                 </span>
-                <h3 class="flex items-center mb-1 text-xl font-semibold text-gray-900">Founding and Seed Funding (2010)</h3>
-                <time class="block mb-2 text-sm font-normal leading-none text-gray-500">Launched in the heart of Silicon Valley</time>
-                <p class="mb-4 text-base font-normal text-gray-700">Established the core team and developed our proprietary risk assessment engine.</p>
+                <div class="bg-white inline-block px-4 py-2 rounded-lg mb-4 shadow-md dark:bg-gray-900">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                        Founding and Seed Funding (2010)
+                    </h3>
+                </div>
+
+
+                <time class="block mb-2 text-sm font-normal leading-none text-gray-500 dark:text-gray-400">Launched in the heart of Silicon
+                    Valley</time>
+                <p class="mb-4 text-base font-normal text-gray-700 dark:text-gray-300">Established the core team and developed our
+                    proprietary risk assessment engine.</p>
             </li>
             <li class="mb-10 ml-6">
-                <span class="absolute flex items-center justify-center w-8 h-8 bg-blue-600 rounded-full -left-4 ring-8 ring-gray-50 dark:ring-gray-50">
-                    <svg class="w-4 h-4 text-white" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16ZM5 9a1 1 0 0 1 1-1h8a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1Z" clip-rule="evenodd"/></svg>
+                <span
+                    class="absolute flex items-center justify-center w-8 h-8 bg-blue-600 rounded-full -left-4 ring-8 ring-gray-50 dark:ring-gray-800">
+                    <svg class="w-4 h-4 text-white" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M10 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16ZM5 9a1 1 0 0 1 1-1h8a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1Z"
+                            clip-rule="evenodd" />
+                    </svg>
                 </span>
-                <h3 class="mb-1 text-xl font-semibold text-gray-900">Public Launch and Expansion (2015)</h3>
-                <time class="block mb-2 text-sm font-normal leading-none text-gray-500">Crossed 50,000 active users</time>
-                <p class="text-base font-normal text-gray-700">Introduced personalized wealth management tools and expanded to international markets.</p>
+                <div class="bg-white inline-block px-4 py-2 rounded-lg mb-4 shadow-md dark:bg-gray-900">
+                    <h3 class="mb-1 text-xl font-semibold text-gray-900 dark:text-white">
+                        Public Launch and Expansion (2015)
+                    </h3>
+                </div>
+
+
+                <time class="block mb-2 text-sm font-normal leading-none text-gray-500 dark:text-gray-400">Crossed 50,000 active
+                    users</time>
+                <p class="text-base font-normal text-gray-700 dark:text-gray-300">Introduced personalized wealth management tools and
+                    expanded to international markets.</p>
             </li>
             <li class="ml-6">
-                <span class="absolute flex items-center justify-center w-8 h-8 bg-blue-600 rounded-full -left-4 ring-8 ring-gray-50 dark:ring-gray-50">
-                    <svg class="w-4 h-4 text-white" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16ZM5 9a1 1 0 0 1 1-1h8a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1Z"/></svg>
+                <span
+                    class="absolute flex items-center justify-center w-8 h-8 bg-blue-600 rounded-full -left-4 ring-8 ring-gray-50 dark:ring-gray-800">
+                    <svg class="w-4 h-4 text-white" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M10 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16ZM5 9a1 1 0 0 1 1-1h8a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1Z" />
+                    </svg>
                 </span>
-                <h3 class="mb-1 text-xl font-semibold text-gray-900">Future of Finance (Present)</h3>
-                <time class="block mb-2 text-sm font-normal leading-none text-gray-500">Focused on AI-driven insights</time>
-                <p class="text-base font-normal text-gray-700">Continuously innovating to integrate advanced AI into portfolio management and budgeting.</p>
+                <div class="bg-white inline-block px-4 py-2 rounded-lg mb-4 shadow-md dark:bg-gray-900">
+                    <h3 class="mb-1 text-xl font-semibold text-gray-900 dark:text-white">
+                        Future of Finance (Present)
+                    </h3>
+                </div>
+
+                <time class="block mb-2 text-sm font-normal leading-none text-gray-500 dark:text-gray-400">Focused on AI-driven
+                    insights</time>
+                <p class="text-base font-normal text-gray-700 dark:text-gray-300">Continuously innovating to integrate advanced AI into
+                    portfolio management and budgeting.</p>
             </li>
         </ol>
 
-        <!-- 3. Testimonial/Quote Card Component (Tailwind Component) -->
-        <figure class="max-w-screen-md mx-auto text-center mb-12 bg-white p-8 rounded-xl shadow-xl border-l-4 border-emerald-500">
-            <svg class="w-10 h-10 mx-auto mb-3 text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 14">
-                <path d="M6 0H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 0 3 3h1a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2V2a2 2 0 0 0-2-2Zm10 0h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 0 3 3h1a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2V2a2 2 0 0 0-2-2Z"/>
+        <figure
+            class="max-w-screen-md mx-auto text-center mb-12 bg-white p-8 rounded-xl shadow-xl border-l-4 border-emerald-500 dark:bg-gray-900 dark:border-l-emerald-700">
+            <svg class="w-10 h-10 mx-auto mb-3 text-gray-300 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor" viewBox="0 0 18 14">
+                <path
+                    d="M6 0H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 0 3 3h1a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2V2a2 2 0 0 0-2-2Zm10 0h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 0 3 3h1a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2V2a2 2 0 0 0-2-2Z" />
             </svg>
             <blockquote>
-                <p class="text-2xl italic font-medium text-gray-900">"SwiftFinance revolutionized the way I approach my long-term savings. The clarity and intuitive design are unmatched."</p>
+                <p class="text-2xl italic font-medium text-gray-900 dark:text-white">"SwiftFinance revolutionized the way I approach my
+                    long-term savings. The clarity and intuitive design are unmatched."</p>
             </blockquote>
             <figcaption class="flex items-center justify-center mt-6 space-x-3 rtl:space-x-reverse">
-                <img class="w-8 h-8 rounded-full shadow-lg" src="https://placehold.co/32x32/1d4ed8/ffffff?text=U" alt="profile picture">
-                <div class="flex items-center divide-x-2 divide-gray-300">
-                    <cite class="pr-3 font-semibold text-gray-900">Jules Verne</cite>
-                    <cite class="pl-3 text-sm text-gray-500">Successful Investor</cite>
+                <img class="w-8 h-8 rounded-full shadow-lg" src="https://placehold.co/32x32/1d4ed8/ffffff?text=U"
+                    alt="profile picture">
+                <div class="flex items-center divide-x-2 divide-gray-300 dark:divide-gray-500">
+                    <cite class="pr-3 font-semibold text-gray-900 dark:text-white">Jules Verne</cite>
+                    <cite class="pl-3 text-sm text-gray-500 dark:text-gray-400">Successful Investor</cite>
                 </div>
             </figcaption>
         </figure>
 
-        <!-- 4. Accordion (Flowbite Component) -->
-        <h2 class="text-3xl font-bold mb-8 text-gray-900 border-b pb-4">Frequently Asked Questions</h2>
-        <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white text-blue-600" data-inactive-classes="text-gray-900">
+        <h2 class="text-3xl font-bold mb-8 text-gray-900 border-b pb-4 dark:text-white dark:border-gray-700">Frequently Asked Questions</h2>
+        <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white text-blue-600"
+            data-inactive-classes="text-gray-900">
             <h2 id="accordion-flush-heading-1">
-                <button type="button" class="flex items-center justify-between w-full py-5 font-semibold rtl:text-right text-gray-900 border-b border-gray-200 hover:bg-gray-100 gap-3" data-accordion-target="#accordion-flush-body-1" aria-expanded="true" aria-controls="accordion-flush-body-1">
-                    <span>Is my data secure with SwiftFinance?</span>
-                    <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" fill="none" viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
-                    </svg>
-                </button>
-            </h2>
-            <div id="accordion-flush-body-1" class="hidden" aria-labelledby="accordion-flush-heading-1">
-                <div class="py-5 border-b border-gray-200">
-                    <p class="mb-2 text-gray-700">Yes, we use industry-leading encryption and security protocols (AES-256). Your privacy and data integrity are our top priority.</p>
-                </div>
-            </div>
-            <h2 id="accordion-flush-heading-2">
-                <button type="button" class="flex items-center justify-between w-full py-5 font-semibold rtl:text-right text-gray-900 border-b border-gray-200 hover:bg-gray-100 gap-3" data-accordion-target="#accordion-flush-body-2" aria-expanded="false" aria-controls="accordion-flush-body-2">
-                    <span>What are your fee structures?</span>
-                    <svg data-accordion-icon class="w-3 h-3 shrink-0" aria-hidden="true" fill="none" viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
-                    </svg>
-                </button>
-            </h2>
-            <div id="accordion-flush-body-2" class="hidden" aria-labelledby="accordion-flush-heading-2">
-                <div class="py-5 border-b border-gray-200">
-                    <p class="mb-2 text-gray-700">Our basic plan is free forever. Premium plans with advanced features start at $19/month. We offer full transparency with no hidden charges.</p>
-                </div>
-            </div>
-        </div>
+               <div id="accordion-flush" data-accordion="collapse">
+  <!-- Accordion Item 1 -->
+  <h2 id="accordion-flush-heading-1">
+    <button
+      type="button"
+      class="flex items-center justify-between w-full py-5 font-semibold text-gray-900 border-b border-gray-200 hover:bg-gray-100 gap-3 transition-colors duration-200 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700"
+      data-accordion-target="#accordion-flush-body-1"
+      aria-expanded="true"
+      aria-controls="accordion-flush-body-1"
+    >
+      <span>Is my data secure with SwiftFinance?</span>
+      <svg
+        data-accordion-icon
+        class="w-3 h-3 shrink-0 transition-transform duration-200 rotate-180"
+        aria-hidden="true"
+        fill="none"
+        viewBox="0 0 10 6"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 5 5 1 1 5"
+        />
+      </svg>
+    </button>
+  </h2>
+  <div
+    id="accordion-flush-body-1"
+    class="hidden dark:bg-gray-800"
+    aria-labelledby="accordion-flush-heading-1"
+  >
+    <div class="py-5 border-b border-gray-200 dark:border-gray-700">
+      <p class="mb-2 text-gray-700 dark:text-gray-300">
+        Yes, we use industry-leading encryption and security protocols (AES-256).
+        Your privacy and data integrity are our top priority.
+      </p>
+    </div>
+  </div>
 
-        <!-- 5. Team Section (Tailwind Component) -->
-        <h2 class="text-3xl font-bold mb-8 mt-12 text-gray-900 border-b pb-4">Meet the Leadership</h2>
+  <!-- Accordion Item 2 -->
+  <h2 id="accordion-flush-heading-2">
+    <button
+      type="button"
+      class="flex items-center justify-between w-full py-5 font-semibold text-gray-800 border-b border-gray-200 hover:bg-gray-100 gap-3 transition-colors duration-200 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700"
+      data-accordion-target="#accordion-flush-body-2"
+      aria-expanded="false"
+      aria-controls="accordion-flush-body-2"
+    >
+      <span>What are your fee structures?</span>
+      <svg
+        data-accordion-icon
+        class="w-3 h-3 shrink-0 transition-transform duration-200"
+        aria-hidden="true"
+        fill="none"
+        viewBox="0 0 10 6"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 5 5 1 1 5"
+        />
+      </svg>
+    </button>
+  </h2>
+  <div
+    id="accordion-flush-body-2"
+    class="hidden dark:bg-gray-800"
+    aria-labelledby="accordion-flush-heading-2"
+  >
+    <div class="py-5 border-b border-gray-200 dark:border-gray-700">
+      <p class="mb-2 text-gray-700 dark:text-gray-300">
+        Our basic plan is free forever. Premium plans with advanced features start
+        at $19/month. We offer full transparency with no hidden charges.
+      </p>
+    </div>
+  </div>
+</div>
+
+
+        <h2 class="text-3xl font-bold mb-8 mt-12 text-gray-900 border-b pb-4 dark:text-blue-600 dark:border-gray-700">Meet the Leadership</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div class="text-center p-4 bg-white rounded-xl shadow-md border border-gray-100">
-                <img class="mx-auto mb-4 w-24 h-24 rounded-full shadow-lg object-cover" src="https://placehold.co/96x96/1d4ed8/ffffff?text=J.D" alt="John Doe avatar">
-                <h3 class="text-xl font-bold tracking-tight text-gray-900">John Doe</h3>
+            <div class="text-center p-4 bg-white rounded-xl shadow-md border border-gray-100 dark:bg-gray-900 dark:border-gray-700">
+                <img class="mx-auto mb-4 w-24 h-24 rounded-full shadow-lg object-cover"
+                    src="https://placehold.co/96x96/1d4ed8/ffffff?text=J.D" alt="John Doe avatar">
+                <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">John Doe</h3>
                 <span class="text-sm text-blue-600">Founder & CEO</span>
             </div>
-            <div class="text-center p-4 bg-white rounded-xl shadow-md border border-gray-100">
-                <img class="mx-auto mb-4 w-24 h-24 rounded-full shadow-lg object-cover" src="https://placehold.co/96x96/1d4ed8/ffffff?text=S.K" alt="Sarah Khan avatar">
-                <h3 class="text-xl font-bold tracking-tight text-gray-900">Sarah Khan</h3>
+            <div class="text-center p-4 bg-white rounded-xl shadow-md border border-gray-100 dark:bg-gray-900 dark:border-gray-700">
+                <img class="mx-auto mb-4 w-24 h-24 rounded-full shadow-lg object-cover"
+                    src="https://placehold.co/96x96/1d4ed8/ffffff?text=S.K" alt="Sarah Khan avatar">
+                <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">Sarah Khan</h3>
                 <span class="text-sm text-blue-600">Head of Technology</span>
             </div>
-            <div class="text-center p-4 bg-white rounded-xl shadow-md border border-gray-100">
-                <img class="mx-auto mb-4 w-24 h-24 rounded-full shadow-lg object-cover" src="https://placehold.co/96x96/1d4ed8/ffffff?text=A.M" alt="Ahmed Mirza avatar">
-                <h3 class="text-xl font-bold tracking-tight text-gray-900">Ahmed Mirza</h3>
+            <div class="text-center p-4 bg-white rounded-xl shadow-md border border-gray-100 dark:bg-gray-900 dark:border-gray-700">
+                <img class="mx-auto mb-4 w-24 h-24 rounded-full shadow-lg object-cover"
+                    src="https://placehold.co/96x96/1d4ed8/ffffff?text=A.M" alt="Ahmed Mirza avatar">
+                <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">Ahmed Mirza</h3>
                 <span class="text-sm text-blue-600">Chief Financial Officer</span>
             </div>
-            <div class="text-center p-4 bg-white rounded-xl shadow-md border border-gray-100">
-                <img class="mx-auto mb-4 w-24 h-24 rounded-full shadow-lg object-cover" src="https://placehold.co/96x96/1d4ed8/ffffff?text=L.T" alt="Lisa Tan avatar">
-                <h3 class="text-xl font-bold tracking-tight text-gray-900">Lisa Tan</h3>
+            <div class="text-center p-4 bg-white rounded-xl shadow-md border border-gray-100 dark:bg-gray-900 dark:border-gray-700">
+                <img class="mx-auto mb-4 w-24 h-24 rounded-full shadow-lg object-cover"
+                    src="https://placehold.co/96x96/1d4ed8/ffffff?text=L.T" alt="Lisa Tan avatar">
+                <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">Lisa Tan</h3>
                 <span class="text-sm text-blue-600">VP of Customer Success</span>
             </div>
         </div>
     </main>
 
     <div id="footer-placeholder">
-        <!-- 100% Pure HTML Footer - Manually Copied for Consistency -->
         <footer class="bg-white rounded-lg shadow dark:bg-gray-900 mt-16 border-t border-gray-200/50">
             <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
                 <div class="sm:flex sm:items-center sm:justify-between">
                     <a href="../../index.html" class="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
-                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z"></path>
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z">
+                            </path>
                         </svg>
-                        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">SwiftFinance</span>
+                        <span
+                            class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">SwiftFinance</span>
                     </a>
-                    <!-- Footer Links (4) -->
-                    <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-600 sm:mb-0 dark:text-gray-400"> 
+                    <ul
+                        class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-600 sm:mb-0 dark:text-gray-400">
                         <li><a href="./about.html" class="hover:underline me-4 md:me-6">About</a></li>
                         <li><a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a></li>
                         <li><a href="#" class="hover:underline me-4 md:me-6">Licensing</a></li>
@@ -207,7 +356,8 @@
                     </ul>
                 </div>
                 <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-                <span class="block text-sm text-gray-600 sm:text-center dark:text-gray-400">© 2025 SwiftFinance™. All Rights Reserved.</span> 
+                <span class="block text-sm text-gray-600 sm:text-center dark:text-gray-400">© 2025 SwiftFinance™. All
+                    Rights Reserved.</span>
             </div>
         </footer>
     </div>

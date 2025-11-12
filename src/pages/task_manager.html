@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwiftFinance | Transaction Tracker</title>
+    <link rel="icon" type="image/x-icon" href="../../assests/favicon/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
+    <script type="module" src="../../utils/themeUtils.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb;
+        }
+
+        .min-h-screen-adj {
+            min-height: calc(100vh - 150px);
+        }
+
+        /* Adjusted min-height for fixed navbar/footer space */
+    </style>
+
+    <script type="module">
+
+        // --- Data Persistence and Initialization using LocalStorage ---
+
+        // Global key for storing data
+        const STORAGE_KEY = 'swiftFinanceTransactions';
+
+        // Utility to save transactions to localStorage
+        const saveTransactions = (transactions) => {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions));
+            window.renderTransactions();
+        };
+
+        // Utility to load transactions from localStorage, or return defaults if empty
+        const loadTransactions = () => {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                return JSON.parse(stored).map(t => ({
+                    ...t,
+                    // Ensure Date objects/numbers are correctly typed upon retrieval
+                    createdDate: new Date(t.createdDate),
+                    amount: Number(t.amount)
+                }));
+            }
+
+            // If empty, seed default transactions
+            const defaultTransactions = [
+                {
+                    id: crypto.randomUUID(),
+                    description: "Monthly Salary Deposit",
+                    amount: 5000.00,
+                    category: "Salary",
+                    type: "Income",
+                    createdDate: new Date(Date.now() - 86400000 * 2),
+                },
+                {
+                    id: crypto.randomUUID(),
+                    description: "Rent Payment",
+                    amount: 1500.00,
+                    category: "Rent",
+                    type: "Expense",
+                    createdDate: new Date(Date.now() - 86400000 * 1),
+                },
+                {
+                    id: crypto.randomUUID(),
+                    description: "Dinner Out with Friends",
+                    amount: 85.50,
+                    category: "Entertainment",
+                    type: "Expense",
+                    createdDate: new Date(),
+                },
+            ];
+            saveTransactions(defaultTransactions);
+            return defaultTransactions;
+        };
+
+        // Global State: Load data immediately on script execution
+        window.transactions = loadTransactions();
+        window.searchQuery = '';
+        window.filterCategory = 'All';
+        window.sortBy = 'newest';
+        window.selectedTransaction = null; // For the update modal
+
+        // Display fixed 'Local Storage' User ID
+        const displayUserId = () => {
+            document.getElementById('user-id-display').textContent = 'LOCAL STORAGE (Client-Side)';
+        }
+
+
+        // Utility to format number as USD currency
+        const formatCurrency = (amount) => {
+            return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
+        };
+
+        // --- CRUD Operations using Array Methods ---
+
+        // C - Create (Array.push())
+        window.addTransaction = (transaction) => {
+            const newTransaction = {
+                id: crypto.randomUUID(), // Generate unique ID
+                ...transaction,
+                createdDate: new Date(),
+                amount: Number(transaction.amount)
+            };
+            window.transactions.push(newTransaction);
+            saveTransactions(window.transactions); // Save and trigger render
+        };
+
+        // U - Update
+        window.updateTransaction = (id, updatedFields) => {
+            // Find the index of the transaction to update
+            const index = window.transactions.findIndex(t => t.id === id);
+
+            if (index !== -1) {
+                // Merge existing data with updated fields
+                window.transactions[index] = {
+                    ...window.transactions[index],
+                    ...updatedFields,
+                    amount: Number(updatedFields.amount) // Ensure amount is number
+                };
+                saveTransactions(window.transactions); // Save and trigger render
+            }
+        };
+
+        // D - Delete (Array.filter())
+        window.deleteTransaction = (id) => {
+            // Use Array.filter() to create a new array without the item to delete
+            window.transactions = window.transactions.filter(t => t.id !== id);
+            saveTransactions(window.transactions); // Save and trigger render
+        };
+
+        // --- Main Rendering and DOM Manipulation Logic (R - Read / Array.map()) ---
+
+        window.renderTransactions = () => {
+            const container = document.getElementById('transaction-list-container');
+            if (!container) return;
+
+            // Show updating message while processing
+            container.innerHTML = `<div class="col-span-full text-center p-12 bg-white rounded-xl shadow-md">
+                <div class="animate-spin inline-block w-8 h-8 border-4 border-t-4 border-blue-500 border-opacity-25 rounded-full"></div>
+                <p class="text-gray-500 mt-3">Updating list...</p>
+            </div>`;
+
+
+            // 1. Filter: Use Array.filter()
+            let filteredTransactions = window.transactions.filter(t => {
+                // Filter by search query (description)
+                const searchMatch = t.description.toLowerCase().includes(window.searchQuery.toLowerCase());
+
+                // Filter by category
+                const categoryMatch = window.filterCategory === 'All' || t.category === window.filterCategory;
+                return searchMatch && categoryMatch;
+            });
+
+            // 2. Sort: Use Array.sort()
+            filteredTransactions.sort((a, b) => {
+                if (window.sortBy === 'newest') {
+                    return b.createdDate.getTime() - a.createdDate.getTime(); // Newest first
+                }
+                if (window.sortBy === 'oldest') {
+                    return a.createdDate.getTime() - b.createdDate.getTime(); // Oldest first
+                }
+                if (window.sortBy === 'amount-high') {
+                    return b.amount - a.amount; // Amount (High to Low)
+                }
+                if (window.sortBy === 'amount-low') {
+                    return a.amount - b.amount; // Amount (Low to High)
+                }
+                return 0;
+            });
+
+            // 3. Map to HTML: Use Array.map()
+            const transactionHtml = filteredTransactions.map(t => {
+                const sign = t.type === 'Expense' ? '-' : '+';
+                const created = t.createdDate.toLocaleDateString();
+
+                return `
+                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 flex flex-col justify-between border-l-8 ${t.type === 'Income' ? 'border-green-500' : 'border-red-500'} dark:bg-gray-900 dark:border-gray-700">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-gray-800 dark:text-white">${t.description}</h3>
+                            <span class="px-3 py-1 text-xs font-semibold rounded-full ${t.type === 'Income' ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800'} shadow-md uppercase">${t.type}</span>
+                        </div>
+
+                        <p class="text-3xl font-extrabold mb-4 flex-grow ${t.type === 'Income' ? 'text-green-600' : 'text-red-600'}">
+                            ${sign}${formatCurrency(t.amount)}
+                        </p>
+                        
+                        <div class="border-t pt-4 flex justify-between items-center text-sm text-gray-500 dark:border-gray-700 dark:text-gray-400">
+                            <div>
+                                <p class="text-xs font-medium text-blue-600">${t.category}</p>
+                                <p>Date: ${created}</p>
+                            </div>
+                            <div class="space-x-2">
+                                <button onclick="window.showUpdateModal('${t.id}')"
+                                    class="text-blue-500 hover:text-blue-700 transition duration-150 p-1 rounded-full hover:bg-blue-50"
+                                    title="Edit Transaction">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-7-1h2m-2-4h2m-2-4h2M15 3h4a2 2 0 012 2v4m-6 0v2m-2-2h-2m-2 2v-2"></path></svg>
+                                </button>
+                                <button onclick="window.confirmDelete('${t.id}', '${t.description}')"
+                                    class="text-red-500 hover:text-red-700 transition duration-150 p-1 rounded-full hover:bg-red-50"
+                                    title="Delete Transaction">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = transactionHtml.length > 0 ? transactionHtml : `
+                <div class="col-span-full text-center p-12 bg-white rounded-xl shadow-inner dark:bg-gray-900 dark:text-white">
+                    <svg class="w-16 h-16 mx-auto text-blue-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <p class="text-xl font-semibold text-gray-700 dark:text-gray-300">No Transactions Found</p>
+                    <p class="text-gray-500 dark:text-gray-400">Log your first income or expense!</p>
+                </div>
+            `;
+        };
+
+        // --- Event Handlers & Modal Logic ---
+
+        // Helper to get form data (C - Create)
+        const handleCreateTransaction = (e) => {
+            e.preventDefault();
+            const form = e.target;
+
+            const newTransaction = {
+                description: form.description.value,
+                amount: form.amount.value,
+                category: form.category.value,
+                type: form.type.value,
+            };
+
+            // Basic validation
+            if (!newTransaction.description || !newTransaction.amount || isNaN(newTransaction.amount) || Number(newTransaction.amount) <= 0) {
+                window.showMessage('Please enter a valid description and a positive numeric amount.', 'error');
+                return;
+            }
+
+            window.addTransaction(newTransaction);
+            form.reset();
+            window.showMessage('Transaction created successfully!', 'success');
+        };
+
+        // UI function to show the update modal (U - Update)
+        window.showUpdateModal = (transactionId) => {
+            // Find the transaction using Array.filter() (returns an array, so take [0])
+            window.selectedTransaction = window.transactions.filter(t => t.id === transactionId)[0];
+
+            if (!window.selectedTransaction) return;
+
+            // Populate the modal form
+            document.getElementById('update-id').value = window.selectedTransaction.id;
+            document.getElementById('update-description').value = window.selectedTransaction.description;
+            document.getElementById('update-amount').value = window.selectedTransaction.amount;
+            document.getElementById('update-category').value = window.selectedTransaction.category;
+            document.getElementById('update-type').value = window.selectedTransaction.type;
+
+            document.getElementById('update-modal').classList.remove('hidden');
+        };
+
+        // Helper to handle form submission for update (U - Update)
+        const handleUpdateTransaction = (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const transactionId = form['update-id'].value;
+
+
+            const updatedFields = {
+                description: form['update-description'].value,
+                amount: form['update-amount'].value,
+                category: form['update-category'].value,
+                type: form['update-type'].value,
+            };
+
+            if (isNaN(updatedFields.amount) || Number(updatedFields.amount) <= 0) {
+                window.showMessage('Please enter a valid positive numeric amount.', 'error');
+                return;
+            }
+
+            window.updateTransaction(transactionId, updatedFields);
+            document.getElementById('update-modal').classList.add('hidden');
+            window.showMessage('Transaction updated successfully!', 'success');
+        };
+
+        // UI function for confirmation before deletion (D - Delete)
+        window.confirmDelete = (transactionId, description) => {
+            const modal = document.getElementById('delete-modal');
+            document.getElementById('delete-transaction-description').textContent = description;
+            document.getElementById('confirm-delete-button').onclick = () => {
+                window.deleteTransaction(transactionId);
+                modal.classList.add('hidden');
+                window.showMessage(`Transaction "${description}" deleted.`, 'success');
+            };
+            modal.classList.remove('hidden');
+        };
+
+        // Message Box Handler (Instead of alert())
+        window.showMessage = (message, type = 'info') => {
+            const box = document.getElementById('message-box');
+            box.textContent = message;
+            box.className = 'fixed top-4 right-4 p-4 rounded-lg shadow-xl text-white transition-all duration-300 transform';
+
+            if (type === 'success') {
+                box.classList.add('bg-green-500', 'translate-x-0', 'opacity-100');
+            } else if (type === 'error') {
+                box.classList.add('bg-red-500', 'translate-x-0', 'opacity-100');
+            } else {
+                box.classList.add('bg-blue-500', 'translate-x-0', 'opacity-100');
+            }
+
+            setTimeout(() => {
+                box.classList.add('translate-x-full', 'opacity-0');
+            }, 3000);
+            setTimeout(() => {
+                box.className = 'hidden';
+            }, 3300);
+        };
+
+        // --- Initialization and Event Attachments ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Display static User ID
+            displayUserId();
+
+            // Attach event listener for Create form
+            document.getElementById('create-transaction-form').addEventListener('submit', handleCreateTransaction);
+
+            // Attach event listener for Update form
+            document.getElementById('update-transaction-form').addEventListener('submit', handleUpdateTransaction);
+
+            // Attach event listeners for Search/Filter/Sort
+            document.getElementById('search-input').addEventListener('input', (e) => {
+                window.searchQuery = e.target.value;
+                window.renderTransactions();
+            });
+
+            document.getElementById('filter-category').addEventListener('change', (e) => {
+                window.filterCategory = e.target.value;
+                window.renderTransactions();
+            });
+
+            document.getElementById('sort-by').addEventListener('change', (e) => {
+                window.sortBy = e.target.value;
+                window.renderTransactions();
+            });
+
+            // Initial render after loading defaults
+            window.renderTransactions();
+        });
+
+    </script>
+</head>
+
+<body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen">
+
+    <nav class="sticky top-0 z-50 bg-gray-900 border-b border-gray-700 shadow-xl">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+
+            <a href="../../index.html" class="flex items-center space-x-3 rtl:space-x-reverse">
+                <svg class="w-7 h-7 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z">
+                    </path>
+                </svg>
+                <span class="self-center text-2xl font-bold whitespace-nowrap text-white">SwiftFinance</span>
+            </a>
+
+
+            <div class="hidden w-full md:block md:w-auto md:order-1" id="navbar-cta-desktop">
+                <ul class="flex flex-col md:flex-row md:space-x-8 mt-4 md:mt-0 font-medium">
+                    <li><a href="../../index.html"
+                            class="block py-2 px-3 text-gray-300 hover:text-white transition-colors duration-150">Home</a>
+                    </li>
+                    <li><a href="./about.html"
+                            class="block py-2 px-3 text-gray-300 hover:text-white transition-colors duration-150">About</a>
+                    </li>
+                    <li><a href="./contact.html"
+                            class="block py-2 px-3 text-gray-300 hover:text-white transition-colors duration-150">Contact</a>
+                    </li>
+                    <li><a href="./task_manager.html"
+                            class="block py-2 px-3 text-white transition-colors duration-150 text-blue-400 font-extrabold border-b-2 border-blue-400">Tracker</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="flex items-center md:order-3 space-x-3 rtl:space-x-reverse">
+                <button id="theme-toggle" type="button"
+                    class="p-2 rounded-full text-gray-400 hover:text-primary-purple hover:bg-gray-800 transition duration-150 focus:outline-none flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+                        </path>
+                    </svg>
+                </button>
+                <a href="./signin.html"
+                    class="text-white px-3 py-2 text-sm font-semibold transition-colors duration-200 hover:text-blue-400">Sign
+                    In</a>
+                <a href="./signup.html"
+                    class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center transition duration-300 shadow-lg">Sign
+                    Up</a>
+
+                <button data-collapse-toggle="navbar-cta-mobile" type="button"
+                    class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-400 rounded-lg md:hidden hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600"
+                    aria-controls="navbar-cta-mobile" aria-expanded="false">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 17 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M1 1h15M1 7h15M1 13h15" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="items-center justify-between hidden w-full md:hidden md:w-auto md:order-1 mt-4"
+                id="navbar-cta-mobile">
+                <ul class="flex flex-col font-medium p-4 border border-gray-700 rounded-lg bg-gray-800 space-y-2">
+                    <li><a href="../../index.html"
+                            class="block py-2 px-3 rounded text-white hover:bg-gray-700">Home</a></li>
+                    <li><a href="./about.html"
+                            class="block py-2 px-3 rounded text-white hover:bg-gray-700">About</a></li>
+                    <li><a href="./contact.html"
+                            class="block py-2 px-3 rounded text-white hover:bg-gray-700">Contact</a></li>
+                    <li><a href="./task_manager.html"
+                            class="block py-2 px-3 rounded text-blue-400 bg-gray-700">Tracker</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <div id="message-box" class="hidden"></div>
+
+    <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 flex-grow min-h-screen-adj">
+        <header class="mb-8 mt-4 flex justify-between items-start flex-wrap gap-4">
+            <div class="p-3 bg-white rounded-lg shadow-md dark:bg-gray-900">
+                <h1 class="text-4xl font-extrabold text-gray-900 tracking-tight dark:text-white">Personal Finance Transaction Tracker
+                </h1>
+            </div>
+
+            <div class="bg-white p-3 rounded-lg shadow-md border border-gray-200 mt-4 md:mt-0 dark:bg-gray-900 dark:border-gray-700">
+                <p class="text-sm font-semibold text-gray-700 dark:text-gray-300">Data Source</p>
+                <p class="text-xs text-blue-600 font-mono" id="user-id-display">Loading...</p>
+            </div>
+        </header>
+
+        <main class="grid lg:grid-cols-3 gap-8">
+
+            <section class="lg:col-span-1 bg-white p-6 rounded-xl shadow-2xl h-fit sticky top-8 dark:bg-gray-900">
+                <h2 class="text-2xl font-semibold text-blue-600 mb-4 border-b pb-2 dark:text-blue-400 dark:border-gray-700">Log New Transaction</h2>
+                <form id="create-transaction-form" class="space-y-4">
+                    <div>
+                        <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
+                        <input type="text" id="description" name="description" required
+                            placeholder="e.g., Groceries run, Monthly Salary"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:placeholder-gray-400">
+                    </div>
+                    <div>
+                        <label for="amount" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Amount (USD)</label>
+                        <input type="number" id="amount" name="amount" required step="0.01" min="0.01"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:placeholder-gray-400">
+                    </div>
+                    <div>
+                        <label for="type" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Type</label>
+                        <select id="type" name="type" required
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border bg-white dark:bg-gray-800 dark:border-gray-600 dark:text-white">
+                            <option value="Expense">Expense (-)</option>
+                            <option value="Income">Income (+)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="category" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Category</label>
+                        <select id="category" name="category" required
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border bg-white dark:bg-gray-800 dark:border-gray-600 dark:text-white">
+                            <option value="Groceries">Groceries</option>
+                            <option value="Rent">Rent/Housing</option>
+                            <option value="Salary">Salary/Income</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Investing">Investing</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150">
+                        <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                        Add Transaction
+                    </button>
+                </form>
+            </section>
+
+            <section class="lg:col-span-2">
+                <div class="bg-white p-6 rounded-xl shadow-2xl mb-6 dark:bg-gray-900">
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 dark:text-white">Transaction List (R - Read)</h2>
+                    <div class="grid sm:grid-cols-3 gap-4">
+                        <div>
+                            <label for="search-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Search
+                                (Description)</label>
+                            <input type="text" id="search-input" placeholder="Search description..."
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:placeholder-gray-400">
+                        </div>
+                        <div>
+                            <label for="filter-category" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Filter by
+                                Category</label>
+                            <select id="filter-category"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border bg-white dark:bg-gray-800 dark:border-gray-600 dark:text-white">
+                                <option value="All">All Categories</option>
+                                <option value="Groceries">Groceries</option>
+                                <option value="Rent">Rent/Housing</option>
+                                <option value="Salary">Salary/Income</option>
+                                <option value="Entertainment">Entertainment</option>
+                                <option value="Investing">Investing</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="sort-by" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Sort By</label>
+                            <select id="sort-by"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border bg-white dark:bg-gray-800 dark:border-gray-600 dark:text-white">
+                                <option value="newest">Date (Newest)</option>
+                                <option value="amount-high">Amount (High to Low)</option>
+                                <option value="amount-low">Amount (Low to High)</option>
+                                <option value="oldest">Date (Oldest)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="transaction-list-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-fr">
+                    <div class="col-span-full text-center p-12 bg-white rounded-xl shadow-md">
+                        <div
+                            class="animate-spin inline-block w-8 h-8 border-4 border-t-4 border-blue-500 border-opacity-25 rounded-full">
+                        </div>
+                        <p class="text-gray-500 mt-3">Loading transactions from Local Storage...</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="footer-placeholder">
+        <footer class="bg-white rounded-lg shadow dark:bg-gray-900 mt-16 border-t border-gray-200/50">
+            <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
+                <div class="sm:flex sm:items-center sm:justify-between">
+                    <a href="../../index.html" class="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                        <span
+                            class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">SwiftFinance</span>
+                    </a>
+                    <ul
+                        class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-600 sm:mb-0 dark:text-gray-400">
+                        <li><a href="./about.html" class="hover:underline me-4 md:me-6">About</a></li>
+                        <li><a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:underline me-4 md:me-6">Licensing</a></li>
+                        <li><a href="./contact.html" class="hover:underline">Contact</a></li>
+                    </ul>
+                </div>
+                <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+                <span class="block text-sm text-gray-600 sm:text-center dark:text-gray-400">© 2025 SwiftFinance™. All
+                    Rights Reserved.</span>
+            </div>
+        </footer>
+    </div>
+
+
+    <div id="update-modal"
+        class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 z-50 overflow-y-auto transition-opacity duration-300">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-xl shadow-2xl p-8 w-full max-w-lg transform transition-all dark:bg-gray-900">
+                <h3 class="text-2xl font-bold text-blue-600 mb-4 border-b pb-2 dark:border-gray-700 dark:text-blue-400">Edit Transaction (U - Update)</h3>
+                <form id="update-transaction-form" class="space-y-4">
+                    <input type="hidden" id="update-id" name="update-id">
+                    <div>
+                        <label for="update-description"
+                            class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
+                        <input type="text" id="update-description" name="update-description" required
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+                            >
+                    </div>
+                    <div>
+                        <label for="update-amount" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Amount (USD)</label>
+                        <input type="number" id="update-amount" name="update-amount" required step="0.01" min="0.01"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border dark:bg-gray-800 dark:border-gray-600 dark:text-white">
+                    </div>
+                    <div>
+                        <label for="update-type" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Type</label>
+                        <select id="update-type" name="update-type" required
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border bg-white dark:bg-gray-800 dark:border-gray-600 dark:text-white">
+                            <option value="Expense">Expense (-)</option>
+                            <option value="Income">Income (+)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="update-category" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Category</label>
+                        <select id="update-category" name="update-category" required
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border bg-white dark:bg-gray-800 dark:border-gray-600 dark:text-white">
+                            <option value="Groceries">Groceries</option>
+                            <option value="Rent">Rent/Housing</option>
+                            <option value="Salary">Salary/Income</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Investing">Investing</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="flex justify-end space-x-3 mt-6">
+                        <button type="button" onclick="document.getElementById('update-modal').classList.add('hidden')"
+                            class="py-2 px-4 rounded-md text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 transition duration-150">
+                            Cancel
+                        </button>
+                        <button type="submit"
+                            class="py-2 px-4 rounded-md text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition duration-150">
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="delete-modal"
+        class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 z-50 overflow-y-auto transition-opacity duration-300">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-sm transform transition-all dark:bg-gray-900">
+                <h3 class="text-xl font-bold text-red-600 mb-4 dark:text-red-400">Confirm Deletion</h3>
+                <p class="text-gray-700 mb-6 dark:text-gray-300">Are you sure you want to delete the transaction: "<span
+                        id="delete-transaction-description" class="font-semibold"></span>"?</p>
+                <div class="flex justify-end space-x-3">
+                    <button type="button" onclick="document.getElementById('delete-modal').classList.add('hidden')"
+                        class="py-2 px-4 rounded-md text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 transition duration-150">
+                        Cancel
+                    </button>
+                    <button id="confirm-delete-button" type="button"
+                        class="py-2 px-4 rounded-md text-sm font-medium text-white bg-red-600 hover:bg-red-700 transition duration-150">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
